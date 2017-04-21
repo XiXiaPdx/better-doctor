@@ -1,7 +1,6 @@
 
 var Search = require("./../js/search.js").searchModule;
 
-
 $(function(){
   $("#searchForm").submit(function(event){
     event.preventDefault();
