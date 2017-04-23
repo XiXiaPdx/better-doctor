@@ -9,7 +9,7 @@ function Search (medicalIssue, userGeoLocation){
 }
 
 Search.prototype.getDoctors = function () {
-  $.get('https://api.betterdoctor.com/2016-03-01/doctors?query='+ this.medicalIssue+'&location=45.5231%2C-122.6765%2C%205&user_location='+this.userGeoLocation.lat+','+this.userGeoLocation.lng+'&skip=0&limit=20&rating-asc&user_key=' + apiKey)
+  $.get('https://api.betterdoctor.com/2016-03-01/doctors?query='+ this.medicalIssue+'&location='+this.userGeoLocation.lat+','+this.userGeoLocation.lng+',5&user_location='+this.userGeoLocation.lat+','+this.userGeoLocation.lng+'&skip=0&limit=8&rating-asc&user_key=' + apiKey)
     .then(function(result) {
       this.searchResults = result;
       console.log(this.searchResults);

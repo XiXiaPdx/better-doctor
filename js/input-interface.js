@@ -12,11 +12,11 @@ function userLocation() {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           };
-          resolve(userGeoLocation);
-          reject("didn't work");
-        }).then(function(result){
+          resolve();
+          reject();
+        }).then(function(){
           afterPositionFound();
-        }).catch(function(reject){
+        }).catch(function(){
           $("#locationMessage").text("Sorry, we couldn't find you.");
           $("button").fadeIn();
         })
@@ -27,7 +27,18 @@ function userLocation() {
 function afterPositionFound (){
  $("#locatingMessage").text("You are at lat: "+userGeoLocation.lat+" & long: "+userGeoLocation.lng);
  $("button").fadeIn();
+ userOnMap();
+}
 
+function userOnMap(){
+  var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: userGeoLocation
+        });
+  var marker = new google.maps.Marker({
+          position: userGeoLocation,
+          map: map
+        });
 }
 
 $(function(){
