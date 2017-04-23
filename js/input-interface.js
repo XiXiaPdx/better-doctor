@@ -26,7 +26,15 @@ function userLocation() {
 }
 
 function afterPositionFound (){
- $("#locatingMessage").text("You are at lat: "+userGeoLocation.lat+" & long: "+userGeoLocation.lng);
+  var geocoder= new google.maps.Geocoder;
+  var latlng = {lat:userGeoLocation.lat, lng:userGeoLocation.lng };
+  geocoder.geocode({'location':latlng}, function(results, status){
+    if (status === "OK"){
+      $("#locatingMessage").text("You are at or near "+results[0].formatted_address);
+    } else {
+      $("#locatingMessage").text("You are at lat: "+userGeoLocation.lat+" & long: "+userGeoLocation.lng);
+    }
+  });
  $("button").fadeIn();
  userOnMap();
 }
