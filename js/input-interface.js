@@ -3,6 +3,7 @@ var Search = require("./../js/search.js").searchModule;
 var Display = require("./../js/display-interface.js").displayModule;
 var mapKey = require ("./../.env").mapKey;
 var userGeoLocation;
+var map;
 
 function userLocation() {
   if (navigator.geolocation) {
@@ -19,7 +20,7 @@ function userLocation() {
         }).catch(function(){
           $("#locationMessage").text("Sorry, we couldn't find you.");
           $("button").fadeIn();
-        })
+        });
       });
   }
 }
@@ -31,8 +32,8 @@ function afterPositionFound (){
 }
 
 function userOnMap(){
-  var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 12,
+   map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 10,
           center: userGeoLocation
         });
   var marker = new google.maps.Marker({
@@ -45,13 +46,12 @@ $(function(){
   $.getScript('https://maps.googleapis.com/maps/api/js?key=' + mapKey);
   userLocation();
 
-
   $("#searchForm").submit(function(event){
     event.preventDefault();
     var medicalIssue = $("#userIllnessInput").val();
     this.reset();
     var newSearch = new Search (medicalIssue, userGeoLocation);
-    newSearch.getDoctors();
+    newSearch.getDoctors(map);
   });
 
   $("#searchResults").on('click','.mapDoctor',function(){
